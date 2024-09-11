@@ -13,7 +13,7 @@ auth_bytes = auth_string.encode('utf-8')
 auth_b64 = base64.b64encode(auth_bytes).decode('utf-8')
 
 # JIRA API URL
-JIRA_API_URL = "https://karendouglas.atlassian.net/rest/api/3/search?jql="
+JIRA_API_URL = "https://karendouglas.atlassian.net/rest/api/3/search?jql=project=KPW"
 
 # GitHub API URL
 GITHUB_API_URL = "https://api.github.com/repos/KarenDouglas/KarenDev/issues"
