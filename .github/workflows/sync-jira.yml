@@ -3,7 +3,7 @@ name: Sync JIRA Issues
 on:
   push:  # Trigger the workflow on push events
     branches:
-      - main  # Specify the branch to monitor, e.g., 'main'
+      - main  # Specify the branch to monitor, e.g., 'main' notes added to test trigger
   workflow_dispatch:  # Allows manual triggering
   schedule:
     - cron: '0 * * * *'  # Example schedule to run every hour
