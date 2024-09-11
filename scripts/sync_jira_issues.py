@@ -11,6 +11,9 @@ GITHUB_API_URL = "https://api.github.com/repos/KarenDouglas/KarenDev/issues"
 
 # Fetch JIRA Issues
 response = requests.get(JIRA_API_URL, headers={"Authorization": f"Bearer {JIRA_API_TOKEN}"})
+# Check the response status and content
+print(f"Response Status Code: {response.status_code}")
+print(f"Response Content: {response.text}")
 jira_issues = response.json()
 
 # Loop through JIRA issues and create GitHub issues
