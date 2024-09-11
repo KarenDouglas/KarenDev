@@ -21,8 +21,8 @@ GITHUB_API_URL = "https://api.github.com/repos/KarenDouglas/KarenDev/issues"
 # Fetch JIRA Issues
 response = requests.get(
     JIRA_API_URL,
-    headers={"Authorization": f"Basic {auth_b64}"}
-      "Content-Type": "application/json"
+    headers={"Authorization": f"Basic {auth_b64}", }
+    
 )
 
 # Check the response status and content
@@ -61,7 +61,11 @@ for issue in jira_issues['issues']:
     github_response = requests.post(GITHUB_API_URL, json={
         "title": title,
         "body": description,
-    }, headers={"Authorization": f"token {GITHUB_TOKEN}"})
+    }, headers={
+        "Authorization": f"token {GITHUB_TOKEN}", 
+         "Content-Type": "application/json"
+        
+        })
 
     # Print response for debugging
     print(f"Created GitHub issue for '{title}': {github_response.status_code} - {github_response.text}")
