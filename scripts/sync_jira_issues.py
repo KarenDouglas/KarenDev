@@ -12,8 +12,9 @@ auth_string = f"{JIRA_EMAIL}:{JIRA_API_TOKEN}"
 auth_bytes = auth_string.encode('utf-8')
 auth_b64 = base64.b64encode(auth_bytes).decode('utf-8')
 
-# API URLs
-JIRA_API_URL = "https://karendouglas.atlassian.net/rest/api/3/search"
+# API URLs with JQL to fetch issues from a specific project
+JIRA_API_URL = "https://karendouglas.atlassian.net/rest/api/3/search?jql=project=KPW"
+
 GITHUB_API_URL = "https://api.github.com/repos/KarenDouglas/KarenDev/issues"
 
 # Fetch JIRA Issues
