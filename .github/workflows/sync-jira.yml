@@ -10,11 +10,12 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v3  # Update to the latest version
+        uses: actions/checkout@v3  # Use the latest version
 
       - name: Sync JIRA Issues to GitHub
         run: |
           python scripts/sync_jira_issues.py
         env:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}  # Make sure this matches the secret name exactly

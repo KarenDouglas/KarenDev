@@ -7,7 +7,7 @@ JIRA_API_TOKEN = os.getenv("JIRA_API_TOKEN")
 JIRA_EMAIL = os.getenv("JIRA_EMAIL")  # Your JIRA account email
 GITHUB_TOKEN = os.getenv("MY_GITHUB_TOKEN")
 
-# Encode credentials for Basic Auth
+# Encode credentials for Basic Authentication
 auth_string = f"{JIRA_EMAIL}:{JIRA_API_TOKEN}"
 auth_bytes = auth_string.encode('utf-8')
 auth_b64 = base64.b64encode(auth_bytes).decode('utf-8')
@@ -31,7 +31,12 @@ if response.status_code != 200:
     print("Failed to fetch issues from JIRA. Exiting...")
     exit(1)
 
-jira_issues = response.json()
+# Attempt to parse the JSON response
+try:
+    jira_issues = response.json()
+except ValueError:
+    print("Error parsing JSON response from JIRA. Exiting...")
+    exit(1)
 
 # Verify that the 'issues' key is in the response
 if 'issues' not in jira_issues:
@@ -41,10 +46,13 @@ if 'issues' not in jira_issues:
 # Loop through JIRA issues and create GitHub issues
 for issue in jira_issues['issues']:
     title = issue['fields']['summary']
-    description = issue['fields']['description']
+    description = issue['fields']['description'] if issue['fields']['description'] else "No description provided."
 
     # Create a GitHub issue
     github_response = requests.post(GITHUB_API_URL, json={
         "title": title,
         "body": description,
     }, headers={"Authorization": f"token {GITHUB_TOKEN}"})
+
+    # Print response for debugging
+    print(f"Created GitHub issue for '{title}': {github_response.status_code} - {github_response.text}")
