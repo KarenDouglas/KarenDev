@@ -1,8 +1,12 @@
 name: Sync JIRA Issues
 
 on:
+  push:  # Trigger the workflow on push events
+    branches:
+      - main  # Specify the branch to monitor, e.g., 'main'
+  workflow_dispatch:  # Allows manual triggering
   schedule:
-    - cron: '0 * * * *'  # Runs every hour (you can adjust the cron schedule as needed)
+    - cron: '0 * * * *'  # Example schedule to run every hour
 
 jobs:
   sync-issues:
@@ -10,7 +14,7 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v3  # Use the latest version
+        uses: actions/checkout@v3
 
       - name: Sync JIRA Issues to GitHub
         run: |
@@ -18,4 +22,4 @@ jobs:
         env:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
           JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
-          MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}  # Make sure this matches the secret name exactly
+          MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
