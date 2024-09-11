@@ -12,9 +12,10 @@ auth_string = f"{JIRA_EMAIL}:{JIRA_API_TOKEN}"
 auth_bytes = auth_string.encode('utf-8')
 auth_b64 = base64.b64encode(auth_bytes).decode('utf-8')
 
-# API URLs with JQL to fetch issues from a specific project
+# JIRA API URL
 JIRA_API_URL = "https://karendouglas.atlassian.net/rest/api/3/search?jql="
 
+# GitHub API URL
 GITHUB_API_URL = "https://api.github.com/repos/KarenDouglas/KarenDev/issues"
 
 # Fetch JIRA Issues
@@ -47,7 +48,13 @@ if 'issues' not in jira_issues:
 # Loop through JIRA issues and create GitHub issues
 for issue in jira_issues['issues']:
     title = issue['fields']['summary']
-    description = issue['fields']['description'] if issue['fields']['description'] else "No description provided."
+    description = issue['fields'].get('description', "No description provided.")
+
+    # Check if description is a dict (which it is in your data)
+    if isinstance(description, dict):
+        # Handle case where description has nested structures
+        # Simplify or convert it to plain text or markdown format
+        description = "Complex structured description; check JIRA for details."
 
     # Create a GitHub issue
     github_response = requests.post(GITHUB_API_URL, json={
