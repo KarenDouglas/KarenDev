@@ -22,6 +22,7 @@ GITHUB_API_URL = "https://api.github.com/repos/KarenDouglas/KarenDev/issues"
 response = requests.get(
     JIRA_API_URL,
     headers={"Authorization": f"Basic {auth_b64}"}
+      "Content-Type": "application/json"
 )
 
 # Check the response status and content
